@@ -23,7 +23,8 @@ var defaults = {
   confirmButtonText: CONFIRM_TEXT,
   cancelButtonText: CANCEL_TEXT,
   confirmButtonClass: '',
-  cancelButtonClass: ''
+  cancelButtonClass: '',
+  imgSrc: null
 };
 
 import Vue from 'vue';
@@ -71,6 +72,8 @@ const defaultCallback = action => {
           }
         } else if (action === 'cancel' && currentMsg.reject) {
           currentMsg.reject(action);
+        } else if (action === 'img') {
+          currentMsg.resolve({ value: instance.inputValue, action });
         }
       } else {
         currentMsg.resolve(action);
@@ -186,7 +189,7 @@ MessageBox.confirm = function(message, title, options) {
   }, options));
 };
 
-MessageBox.prompt = function(message, title, options) {
+MessageBox.prompt = function(message, title, src, options) {
   if (typeof title === 'object') {
     options = title;
     title = '';
@@ -196,7 +199,8 @@ MessageBox.prompt = function(message, title, options) {
     message: message,
     showCancelButton: true,
     showInput: true,
-    $type: 'prompt'
+    $type: 'prompt',
+    imgSrc: src
   }, options));
 };
 

@@ -9,6 +9,9 @@
           <div class="mint-msgbox-message" v-html="message"></div>
           <div class="mint-msgbox-input" v-show="showInput">
             <input v-model="inputValue" :placeholder="inputPlaceholder" ref="input">
+            <div class="mint-msgbox-img" style="display: inline-block;height: 28px;vertical-align: middle;" @click="handleAction('img')">
+              <img :src="imgSrc">
+            </div>
             <div class="mint-msgbox-errormsg" :style="{ visibility: !!editorErrorMessage ? 'visible' : 'hidden' }">{{ editorErrorMessage }}</div>
           </div>
         </div>
@@ -54,9 +57,10 @@
           border: 1px solid #dedede;
           border-radius: 5px;
           padding: 4px 5px;
-          width: 100%;
+          width: 70%;
           appearance: none;
           outline: none;
+          display: inline-block;
         }
         & input.invalid {
           border-color: #ff4949;
@@ -71,6 +75,8 @@
         font-size: 12px;
         min-height: 18px;
         margin-top: 2px;
+        width: 70%;
+        display: inline-block;
       }
 
       @descendent title {
@@ -217,7 +223,7 @@
       },
 
       handleAction(action) {
-        if (this.$type === 'prompt' && action === 'confirm' && !this.validate()) {
+        if (this.$type === 'prompt' && action === 'confirm' && !this.validate() && action !== 'img') {
           return;
         }
         var callback = this.callback;
@@ -300,7 +306,8 @@
         confirmButtonDisabled: false,
         cancelButtonClass: '',
         editorErrorMessage: null,
-        callback: null
+        callback: null,
+        imgSrc: null
       };
     }
   };
